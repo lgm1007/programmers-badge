@@ -2,14 +2,16 @@ import { UserData } from '../../interface/programmers.interface';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Color } from '../../interface/color.interface';
+import { TierData } from '../../interface/tier.interface';
 
 /**
  * 뱃지 SVG 문자열 생성 메소드
  * @description 프로그래머스에서 받아온 데이터를 이용하여 뱃지 SVG 문자열을 반환합니다.
  * @param userData
+ * @param tierData
  * @returns {string}
  */
-export const getSvgStr = (userData: UserData): string => {
+export const getSvgStr = (userData: UserData, tierData: TierData): string => {
   const colors: Color[] = [
     { start: '#F49347;', middle: '#984400;', end: '#492000;' }, // 0레벨 Bronze
     { start: '#939195;', middle: '#6B7E91;', end: '#1F354A;' }, // 1레벨 Silver
@@ -18,7 +20,7 @@ export const getSvgStr = (userData: UserData): string => {
     { start: '#96B8DC;', middle: '#3EA5DB;', end: '#4D6399;' }, // 4레벨 Diamond
     { start: '#E45B62;', middle: '#E14476;', end: '#CA0059;' }, // 5레벨 Ruby
   ];
-  const imagePath = path.join(__dirname, '../../../static/skill_check.png');
+  const imagePath = path.join(__dirname, '../../../static/tier.png');
   const imageBase64 = fs.readFileSync(imagePath, 'base64');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -65,13 +67,13 @@ export const getSvgStr = (userData: UserData): string => {
         <!-- 그라데이션 색상 -->
         <defs>
             <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="35%">
-                <stop offset="10%" style="stop-color: ${colors[userData.skillCheck?.level ?? 0].start}stop-opacity:1">
+                <stop offset="10%" style="stop-color: ${colors[tierData.tier ?? 0].start}stop-opacity:1">
                     <animate attributeName="stop-opacity" values="0.7; 0.73; 0.9 ; 0.97; 1; 0.97; 0.9; 0.73; 0.7;" dur="4s" repeatCount="indefinite" repeatDur="01:00"/>
                 </stop>
-                <stop offset="55%" style="stop-color: ${colors[userData.skillCheck?.level ?? 0].middle}stop-opacity:1">
+                <stop offset="55%" style="stop-color: ${colors[tierData.tier ?? 0].middle}stop-opacity:1">
                     <animate attributeName="stop-opacity" values="1; 0.95; 0.93; 0.95; 1;" dur="4s" repeatCount="indefinite" repeatDur="01:00"/>
                 </stop>
-                <stop offset="100%" style="stop-color: ${colors[userData.skillCheck?.level ?? 0].end}stop-opacity:1">
+                <stop offset="100%" style="stop-color: ${colors[tierData.tier ?? 0].end}stop-opacity:1">
                     <animate attributeName="stop-opacity" values="1; 0.97; 0.9; 0.83; 0.8; 0.83; 0.9; 0.97; 1;" dur="4s" repeatCount="indefinite" repeatDur="01:00"/>
                 </stop>
             </linearGradient>
@@ -110,7 +112,7 @@ export const getSvgStr = (userData: UserData): string => {
         <g class="group">
             <image href="data:image/png;base64,${imageBase64}" x="15" y="15" height="50px" width="100px"/>
 
-            <text text-anchor="middle" dominant-baseline="middle" x="66.5" y="95" class="title_no" style="fill:#ffffff;">${userData.skillCheck?.level ?? 0}</text>
+            <text text-anchor="middle" dominant-baseline="middle" x="66.5" y="95" class="title_no" style="fill:#ffffff;">${tierData.tier ?? 0}</text>
 
             <text text-anchor="start" x="160" y="55" class="title_id" style="fill:#ffffff;">${userData.name}</text>
         </g>
@@ -141,9 +143,10 @@ export const getSvgStr = (userData: UserData): string => {
  * 뱃지 (미니) SVG 문자열 생성 메소드
  * @description 프로그래머스에서 받아온 데이터를 이용하여 뱃지 SVG 문자열을 반환합니다.
  * @param userData
+ * @param tierData
  * @returns {string}
  */
-export const getMiniSvgStr = (userData: UserData): string => {
+export const getMiniSvgStr = (userData: UserData, tierData: TierData): string => {
   const colors: Color[] = [
     { start: '#F49347;', middle: '#984400;', end: '#492000;' }, // 0레벨 Bronze
     { start: '#939195;', middle: '#6B7E91;', end: '#1F354A;' }, // 1레벨 Silver
@@ -199,9 +202,9 @@ export const getMiniSvgStr = (userData: UserData): string => {
         <!-- 그라데이션 색상 -->
         <defs>
             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="35%">
-                <stop offset="10%" style="stop-color: ${colors[userData.skillCheck?.level ?? 0].start}stop-opacity:1"/>
-                <stop offset="55%" style="stop-color: ${colors[userData.skillCheck?.level ?? 0].middle}stop-opacity:1"/>
-                <stop offset="100%" style="stop-color: ${colors[userData.skillCheck?.level ?? 0].end}stop-opacity:1"/>
+                <stop offset="10%" style="stop-color: ${colors[tierData.tier ?? 0].start}stop-opacity:1"/>
+                <stop offset="55%" style="stop-color: ${colors[tierData.tier ?? 0].middle}stop-opacity:1"/>
+                <stop offset="100%" style="stop-color: ${colors[tierData.tier ?? 0].end}stop-opacity:1"/>
             </linearGradient>
             <clipPath id="round-corner">
                 <rect x="0" y="0" width="110" height="20" rx="3" ry="3"/>
@@ -212,7 +215,7 @@ export const getMiniSvgStr = (userData: UserData): string => {
         <rect width="75" height="20" clip-path="url(#round-corner)" class="gray-area"/>
 
         <text text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle" transform="translate(37.5, 11)">programmers</text>
-        <text class="tier" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle" transform="translate(92, 11)">Lv.${userData.skillCheck?.level ?? 0}</text>
+        <text class="tier" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle" transform="translate(92, 11)">Lv.${tierData.tier ?? 0}</text>
     </svg>
     `;
 };

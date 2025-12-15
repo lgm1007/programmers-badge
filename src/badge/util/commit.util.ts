@@ -54,7 +54,7 @@ export const commitFile = async (
     'config',
     '--global',
     'user.email',
-    'JH8459@example.com',
+    'flxl654@gmail.com',
   ]);
 
   await execCmd('git', [
