@@ -34,7 +34,7 @@ export class BadgeService {
     const tierData: TierData = createTierData(userData.ranking.rank)
 
     const svgStr: string = getSvgStr(userData, tierData);
-    const svgStrMini: string = getMiniSvgStr(userData, tierData);
+    const svgStrMini: string = getMiniSvgStr(tierData);
 
     const staticDir = path.join(__dirname, '../../static');
 

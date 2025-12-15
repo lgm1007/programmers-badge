@@ -142,11 +142,10 @@ export const getSvgStr = (userData: UserData, tierData: TierData): string => {
 /**
  * 뱃지 (미니) SVG 문자열 생성 메소드
  * @description 프로그래머스에서 받아온 데이터를 이용하여 뱃지 SVG 문자열을 반환합니다.
- * @param userData
  * @param tierData
  * @returns {string}
  */
-export const getMiniSvgStr = (userData: UserData, tierData: TierData): string => {
+export const getMiniSvgStr = (tierData: TierData): string => {
   const colors: Color[] = [
     { start: '#F49347;', middle: '#984400;', end: '#492000;' }, // 0레벨 Bronze
     { start: '#939195;', middle: '#6B7E91;', end: '#1F354A;' }, // 1레벨 Silver
