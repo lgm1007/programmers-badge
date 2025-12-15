@@ -3,6 +3,7 @@ import { ProgrammersService } from '../programmers/programmers.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import { UserData } from '../interface/programmers.interface';
+import { createTierData, TierData } from '../interface/tier.interface';
 import { getMiniSvgStr, getSvgStr } from './util/svg.util';
 import { commitFile } from './util/commit.util';
 import { ConfigService } from '@nestjs/config';
@@ -30,9 +31,10 @@ export class BadgeService {
   async createBadge(): Promise<void> {
     const userData: UserData =
       await this.programmersService.getProgrammersRecordInfo();
+    const tierData: TierData = createTierData(userData.ranking.rank)
 
-    const svgStr: string = getSvgStr(userData);
-    const svgStrMini: string = getMiniSvgStr(userData);
+    const svgStr: string = getSvgStr(userData, tierData);
+    const svgStrMini: string = getMiniSvgStr(tierData);
 
     const staticDir = path.join(__dirname, '../../static');
 
