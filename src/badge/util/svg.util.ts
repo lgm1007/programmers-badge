@@ -110,7 +110,7 @@ export const getSvgStr = (userData: UserData, tierData: TierData): string => {
         </line>
 
         <g class="group">
-            <image href="data:image/png;base64,${imageBase64}" x="15" y="15" height="50px" width="100px"/>
+            <image href="data:image/png;base64,${imageBase64}" x="15" y="15" height="65px" width="125px"/>
 
             <text text-anchor="middle" dominant-baseline="middle" x="66.5" y="95" class="title_no" style="fill:#ffffff;">${tierData.tier ?? 0}</text>
 
